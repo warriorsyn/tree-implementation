@@ -36,20 +36,15 @@ public class App {
             System.out.print("enter value of the node: ");
             Integer nodes = scan.nextInt();
 
-            
-            if (i == 0 ) {
+            if (i == 0) {
                 root.setValue(nodes);
-            }
-            
-           else {
-            Node<Integer> node = new Node<Integer>(nodes, root);
-            root.insertNodeToBranch(node);
+            } else {
+                Node<Integer> node = new Node<Integer>(nodes, root);
+                root.insertNodeToBranch(node);
            }
-
         }
+
         BTreePrinter.printNode(root);
         scan.close();
-
-        
     }
 }
