@@ -90,6 +90,47 @@ public class Node<T> {
         }
     }
 
+    /**
+     * Removes center node to transform a tree into a binary tree
+     */
+    public void transformToBinary(Node<T> node) {
+        node.setCenter(null);
+        Thread thread1 = new Thread (
+                new Runnable() {
+                    public void run() {
+                        doTransform(node);
+                    }
+
+                    private void doTransform(Node<T> node2) {
+                        node2.setCenter(null);
+                        if (node2.left == null) {
+                           return;
+                        }
+
+                        doTransform(node2.left);
+                    }
+                }
+        );
+
+        Thread thread2 = new Thread (
+                new Runnable() {
+                    public void run() {
+                        doTransform(node);
+                    }
+                    private void doTransform(Node<T> node2) {
+                        node2.setCenter(null);
+                        if (node2.right == null) {
+                            return;
+                        }
+
+                        doTransform(node2.right);
+                    }
+                }
+        );
+
+        thread1.start();
+        thread2.start();
+    }
     @Override
     public String toString() {
         return value.toString();
