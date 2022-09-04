@@ -1,3 +1,6 @@
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 public class Node<T> {
     private T value;
     private Node<T> right;
@@ -24,6 +27,7 @@ public class Node<T> {
 
     /**
      * @param value the value to set
+     * @param root
      */
     public void setValue(T value) {
         this.value = value;
@@ -91,6 +95,7 @@ public class Node<T> {
     }
 
     /**
+     * @param node<t> root node
      * Removes center node to transform a tree into a binary tree
      */
     public void transformToBinary(Node<T> node) {
@@ -131,6 +136,34 @@ public class Node<T> {
         thread1.start();
         thread2.start();
     }
+    public Node<T> findElement(Node<T> node, T element) {
+        if (node != null) {
+            if (element.equals(node.getValue())){
+                return node;
+            }
+
+            var found = findElement(node.getLeft(), element);
+
+            if (found != null) {
+                return found;
+            }
+
+            found = findElement(node.getCenter(), element);
+
+            if (found != null) {
+                return found;
+            }
+
+            found = findElement(node.getRight(), element);
+
+            if (found != null) {
+                return found;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public String toString() {
         return value.toString();
