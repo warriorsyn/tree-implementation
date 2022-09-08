@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
 <<<<<<< HEAD
+<<<<<<< HEAD
         System.out.println("Hello, World!");
         
             Node<Integer> firstNode = new Node<Integer>();
@@ -36,6 +37,9 @@ public class App {
          Scanner scan = new Scanner(System.in);
         
 
+=======
+        Scanner scan = new Scanner(System.in);
+>>>>>>> 4b95880d023cb249371fbd7264b59dea1fc35e5c
 =======
         Scanner scan = new Scanner(System.in);
 >>>>>>> 4b95880d023cb249371fbd7264b59dea1fc35e5c

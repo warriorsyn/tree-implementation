@@ -1,6 +1,9 @@
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> 4b95880d023cb249371fbd7264b59dea1fc35e5c
 
 public class Node<T> {
     private T value;
@@ -150,6 +153,7 @@ public class Node<T> {
         thread1.start();
         thread2.start();
     }
+<<<<<<< HEAD
 
     ArrayList<Node<T>> LeafList = new ArrayList<Node<T>>();
     /**
@@ -241,13 +245,19 @@ public class Node<T> {
 
 
 
+=======
+>>>>>>> 4b95880d023cb249371fbd7264b59dea1fc35e5c
     public Node<T> findElement(Node<T> node, T element) {
         if (node != null) {
             if (element.equals(node.getValue())){
                 return node;
             }
 
+<<<<<<< HEAD
             Node<T> found = findElement(node.getLeft(), element);
+=======
+            var found = findElement(node.getLeft(), element);
+>>>>>>> 4b95880d023cb249371fbd7264b59dea1fc35e5c
 
             if (found != null) {
                 return found;
