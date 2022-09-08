@@ -2,43 +2,10 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        
-            Node<Integer> firstNode = new Node<Integer>();
-            firstNode.setValue(10);
 
-            Node<Integer> secondNode = new Node<Integer>(16, firstNode);
-
-            Node<Integer> thirdNode = new Node<Integer>(97, firstNode);
-
-            Node<Integer> forthNode = new Node<Integer>(169, firstNode);
-
-            Node<Integer> fiftyNode = new Node<>(66, secondNode);
-
-            Node<Integer> sixthNode = new Node<>(52, forthNode);
-            Node<Integer> seventhNode = new Node<>(60, secondNode);
-
-            firstNode.insertNodeToBranch(secondNode);
-            firstNode.insertNodeToBranch(thirdNode);
-            firstNode.insertNodeToBranch(forthNode);
-
-            secondNode.insertNodeToBranch(fiftyNode);
-            secondNode.insertNodeToBranch(seventhNode);
-            
-            forthNode.insertNodeToBranch(sixthNode);
-            
-
-            BTreePrinter.printNode(firstNode);
-            System.out.println(firstNode.findHeight(secondNode));
-        
-        /*
-         Scanner scan = new Scanner(System.in);
         
 
-=======
-        Scanner scan = new Scanner(System.in);
-
-=======
+        
         Scanner scan = new Scanner(System.in);
 
         System.out.print("enter the numbers of nodes: ");
@@ -101,7 +68,7 @@ public class App {
         BTreePrinter.printNode(root);
         root.findElement(root, 1);
         scan.close();
-        */
+        
     }
          
 }
