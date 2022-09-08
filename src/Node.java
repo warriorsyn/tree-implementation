@@ -1,5 +1,10 @@
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+
 public class Node<T> {
     private T value;
+    private boolean isRoot;
     private Node<T> right;
     private Node<T> center;
     private Node<T> left;
@@ -24,6 +29,7 @@ public class Node<T> {
 
     /**
      * @param value the value to set
+     * @param root
      */
     public void setValue(T value) {
         this.value = value;
@@ -41,6 +47,18 @@ public class Node<T> {
      */
     public void setRight(Node<T> right) {
         this.right = right;
+    }
+
+
+    public Node<T> getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
     }
 
     /**
@@ -91,6 +109,7 @@ public class Node<T> {
     }
 
     /**
+     * @param node<t> root node
      * Removes center node to transform a tree into a binary tree
      */
     public void transformToBinary(Node<T> node) {
@@ -131,6 +150,125 @@ public class Node<T> {
         thread1.start();
         thread2.start();
     }
+
+    ArrayList<Node<T>> LeafList = new ArrayList<Node<T>>();
+    /**
+     * @param node
+     * @return
+     */
+    public ArrayList<Node<T>> findLeaf(Node<T> node) {
+
+        if (node == null) {
+            return  null;
+        } else if (node.getLeft() != null && node.getRight() != null && node.getCenter() != null){
+            if (node.left != null) {
+                LeafList.add(node.left);
+            }
+
+            if (node.right != null) {
+                LeafList.add(node.right);
+            }
+
+            if (node.center != null) {
+                LeafList.add(node.center);
+            }
+            
+
+            return LeafList;
+        }else{
+            return findLeaf(node);
+        }
+
+    }
+
+    public Node<T> isRoot(Node<T> root){
+        if (root.getParent() == null) {
+            return root;
+        } else{
+            return null;
+        }
+
+    }
+
+    /*
+     * public int quantLeaf(Node<T> node) {
+
+        if (node == null) {
+            return  0;
+        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
+            return 1;
+        }else{
+            return quantLeaf(node.left) + quantLeaf(node.right) + quantLeaf(node.center);
+        }
+
+    }
+     */
+
+     public int findDepth (Node<T> node, Node<T> parent){
+
+        if (node.getParent() == null) {
+            return 0;
+        }else{
+            return 1 + findDepth(node, node.parent);
+        }
+        
+
+        
+
+     }
+
+
+     public int findHeight(Node<T> node){
+        
+
+        if (node == null) {
+            return -1;
+        }
+        else{
+            int left = findHeight(node.left);
+            int right = findHeight(node.right);
+            int center = findHeight(node.center);
+            if (left > right) {
+                return left +1;                
+            } else {
+                return right+1;
+            }
+        }
+     }
+
+
+    
+
+
+
+    public Node<T> findElement(Node<T> node, T element) {
+        if (node != null) {
+            if (element.equals(node.getValue())){
+                return node;
+            }
+
+            Node<T> found = findElement(node.getLeft(), element);
+
+            if (found != null) {
+                return found;
+            }
+
+            found = findElement(node.getCenter(), element);
+
+            if (found != null) {
+                return found;
+            }
+
+            found = findElement(node.getRight(), element);
+
+            if (found != null) {
+                return found;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public String toString() {
         return value.toString();
