@@ -25,17 +25,16 @@ public class App {
                                }
 
                                if (firstExec) {
-                                       System.out.println("In which node do you want to insert this value to branch? : ");
+                                       System.out.print("In which node do you want to insert this value to branch? : ");
                                        branchNode = scan.nextInt();
                                }
 
                                if (!firstExec) {
                                        System.out.print("enter value of the node: ");
                                        value = scan.nextInt();
-                                       System.out.println("In which node do you want to insert this value to branch? : ");
+                                       System.out.print("In which node do you want to insert this value to branch? : ");
                                        branchNode = scan.nextInt();
                                }
-
 
                                var foundNode = root.findElement(root, branchNode);
 
@@ -56,6 +55,8 @@ public class App {
            }
         }
 
+        System.out.println("-----------------------------");
+        System.out.println("Binary Tree");
 
         root.transformToBinary(root);
 
