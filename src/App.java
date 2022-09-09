@@ -60,18 +60,13 @@ public class App {
            }
         }
 
-        // System.out.println("-----------------------------");
-        // System.out.println("Binary Tree");
+        System.out.println("-----------------------------");
+        System.out.println("Binary Tree");
 
-        // root.transformToBinary(root);
+        root.transformToBinary(root);
+        BTreePrinter.printNode(root);
 
-        // BTreePrinter.printNode(root);
-        // root.findElement(root, 1);
-    /*   System.out.println(root.findLeafLeft(root));
-       System.out.println(root.findLeafRight(root));
-       System.out.println(root.findDepth(root, 5));
-       System.out.println(root.findHeight(root, 5));*/
-
+        System.out.println("-----------------------------");
         root.extractData(root);
         System.out.println("The tree degree is: " + root.getTreeDegree(root));
         System.out.println("The height of the tree is: " + root.findHeight(root, root.getValue()));
