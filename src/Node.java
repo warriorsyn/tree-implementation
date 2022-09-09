@@ -136,6 +136,23 @@ public class Node<T> {
         thread1.start();
         thread2.start();
     }
+
+    public int findDepth(Node<T> root, T x) {
+        if (root == null) {
+            return -1;
+        }
+
+        int dist = -1;
+
+        if (
+                root.value == x ||(dist = findDepth(root.left, x)) >= 0 || (dist = findDepth(root.right, x)) >= 0
+        ) {
+            return dist + 1;
+        }
+
+        return dist;
+    }
+
     public Node<T> findElement(Node<T> node, T element) {
         if (node != null) {
             if (element.equals(node.getValue())){

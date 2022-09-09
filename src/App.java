@@ -61,6 +61,21 @@ public class App {
         root.transformToBinary(root);
 
         BTreePrinter.printNode(root);
+
+        System.out.println("-----------------------------");
+
+        while (true) {
+            System.out.println("Insert the node you want to know the death and height: ");
+            int value =  scan.nextInt();
+
+            if (value == -1) {
+                break;
+            }
+
+            var depth = root.findDepth(root, value);
+
+            System.out.println("The depth of the node " + value + " is " + depth);
+        }
         scan.close();
     }
 }
