@@ -1,9 +1,4 @@
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
 import java.util.ArrayList;
-
-
 
 public class Node<T> {
     private T value;
@@ -11,6 +6,8 @@ public class Node<T> {
     private Node<T> center;
     private Node<T> left;
     private Node<T> parent;
+    private Node<T> rootNode;
+    private int height;
 
     public Node(T value, Node<T> parent) {
         this.value = value;
@@ -31,7 +28,6 @@ public class Node<T> {
 
     /**
      * @param value the value to set
-     * @param root
      */
     public void setValue(T value) {
         this.value = value;
@@ -155,9 +151,67 @@ public class Node<T> {
 
     ArrayList<Node<T>> LeafList = new ArrayList<Node<T>>();
     /**
-     * @param node
-     * @return
+     * @return boolean
      */
+
+    public boolean isLeaf() {
+        if (this.right == null && this.center == null && this.left == null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public int getNodeDegree() {
+        int degree = 0;
+        if (this.getLeft() != null) {
+            degree++;
+        }
+
+        if (this.getCenter() != null) {
+            degree++;
+        }
+
+        if (this.getRight() != null) {
+            degree++;
+        }
+
+        return degree;
+    }
+
+    public int getTreeDegree(Node<T> node) {
+        int treeDegree = 0;
+
+        if (node != null) {
+              getTreeDegree(node.getLeft());
+
+
+            if (node.getLeft() != null) {
+                if (node.getLeft().getNodeDegree() > treeDegree) {
+                    treeDegree = node.getLeft().getNodeDegree();
+                }
+            }
+
+            getTreeDegree(node.getCenter());
+            if (node.getCenter() != null) {
+                if (node.getCenter().getNodeDegree() > treeDegree) {
+                    treeDegree = node.getCenter().getNodeDegree();
+                }
+            }
+
+
+            getTreeDegree(node.getRight());
+            if (node.getRight() != null) {
+                if (node.getRight().getNodeDegree() > treeDegree) {
+                    treeDegree = node.getRight().getNodeDegree();
+                }
+            }
+
+        }
+
+        return treeDegree;
+    }
+
     public Node<T> findLeafLeft(Node<T> node) {
         if (node == null) {
             return  null;
@@ -179,16 +233,14 @@ public class Node<T> {
         }
     }
 
-    public Node<T> isRoot(Node<T> root){
-        if (root.getParent() == null) {
-            return root;
-        } else{
-            return null;
-        }
+    public boolean isRoot(){
+      if (this.getParent() == null) {
+          return true;
+      }
 
+      return false;
     }
 
-    
     public int quantLeaf(Node<T> node) {
 
         if (node == null) {
@@ -198,46 +250,54 @@ public class Node<T> {
         }else{
             return quantLeaf(node.left) + quantLeaf(node.right) + quantLeaf(node.center);
         }
-
     }
-     
 
-     public int findDepth (Node<T> node, Node<T> parent){
-
-        if (node.getParent() == null) {
-            return 0;
-        }else{
-            return 1 + findDepth(node, node.parent);
-        }
-        
-
-        
-
-     }
-
-
-     public int findHeight(Node<T> node){
-        
-
-        if (node == null) {
+    public int findDepth(Node<T> root, T x) {
+        if (root == null) {
             return -1;
         }
-        else{
-            int left = findHeight(node.left);
-            int right = findHeight(node.right);
-            int center = findHeight(node.center);
-            if (left > right) {
-                return left +1;                
-            } else {
-                return right+1;
-            }
+
+        int dist = -1;
+
+        if (
+                root.value == x ||(dist = findDepth(root.left, x)) >= 0 || (dist = findDepth(root.center, x)) >= 0 || (dist = findDepth(root.right, x)) >= 0
+        ) {
+            return dist + 1;
         }
-     }
 
+        return dist;
+    }
 
-    
+    public int findHeightUtil(Node root, T x)
+    {
+        // Base Case
+        if (root == null)
+        {
+            return -1;
+        }
 
+        // Store the maximum height of
+        // the left and right subtree
+        int leftHeight = findHeightUtil(root.left, x);
 
+        int rightHeight = findHeightUtil(root.right, x);
+
+        // Update height of the current node
+        int ans = Math.max(leftHeight, rightHeight) + 1;
+
+        // If current node is the required node
+        if (root.value == x)
+            height = ans;
+
+        return ans;
+    }
+
+    public int findHeight(Node root, T x)
+    {
+        findHeightUtil(root, x);
+
+        return height;
+    }
 
 
     public Node<T> findElement(Node<T> node, T element) {
@@ -246,10 +306,7 @@ public class Node<T> {
                 return node;
             }
 
-
-
             var found = findElement(node.getLeft(), element);
-
 
             if (found != null) {
                 return found;
@@ -271,7 +328,43 @@ public class Node<T> {
         return null;
     }
 
+    public void extractData(Node<T> node) {
+        if (node != null) {
+            if (node.isRoot()) {
+                rootNode = node;
+            }
 
+            extractData(node.getLeft());
+
+            if (node.getLeft() != null) {
+                System.out.println("Depth of node " + node.getLeft() + ": " + rootNode.findDepth(rootNode, node.getLeft().getValue()));
+                System.out.println("Height of node " + node.getLeft() + ": " + rootNode.findHeight(rootNode, node.getLeft().getValue()));
+                System.out.println("Is node " + node.getLeft() + " a leaf?: " + (node.getLeft().isLeaf() ? "Is a leaf" : " Is internal node"));
+                System.out.println("The degree of node " + node.getLeft() + " is: " + node.getLeft().getNodeDegree());
+                System.out.println("-------------------------------------------------------------------------------------------------");
+            }
+
+            extractData(node.getCenter());
+
+            if (node.getCenter() != null) {
+                System.out.println("Depth of node " + node.getCenter() + ": " + rootNode.findDepth(rootNode, node.getCenter().getValue()));
+                System.out.println("Height of node " + node.getCenter() + ": " + rootNode.findHeight(rootNode, node.getCenter().getValue()));
+                System.out.println("Is node " + node.getCenter() + " a leaf?: " + (node.getCenter().isLeaf() ? "Is a leaf" : " Is internal node"));
+                System.out.println("The degree of node " + node.getCenter() + " is: " + node.getCenter().getNodeDegree());
+                System.out.println("-------------------------------------------------------------------------------------------------");
+            }
+
+            extractData(node.getRight());
+
+            if (node.getRight() != null) {
+                System.out.println("Depth of node " + node.getRight() + ": " + rootNode.findDepth(rootNode, node.getRight().getValue()));
+                System.out.println("Height of node " + node.getRight() + ": " + rootNode.findHeight(rootNode, node.getRight().getValue()));
+                System.out.println("Is node " + node.getRight() + " a leaf?: " + (node.getRight().isLeaf() ? "Is a leaf" : " Is internal node"));
+                System.out.println("The degree of node " + node.getRight() + " is: " + node.getRight().getNodeDegree());
+                System.out.println("-------------------------------------------------------------------------------------------------");
+            }
+        }
+    }
 
     @Override
     public String toString() {

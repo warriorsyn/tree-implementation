@@ -67,8 +67,15 @@ public class App {
 
         // BTreePrinter.printNode(root);
         // root.findElement(root, 1);
-       System.out.println(root.findLeafLeft(root));
+    /*   System.out.println(root.findLeafLeft(root));
        System.out.println(root.findLeafRight(root));
+       System.out.println(root.findDepth(root, 5));
+       System.out.println(root.findHeight(root, 5));*/
+
+        root.extractData(root);
+        System.out.println("The tree degree is: " + root.getTreeDegree(root));
+        System.out.println("The height of the tree is: " + root.findHeight(root, root.getValue()));
+        System.out.println("The depth of the tree is: " + root.findDepth(root, root.getValue()));
         scan.close();
         
     }
