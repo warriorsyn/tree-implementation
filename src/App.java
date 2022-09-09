@@ -60,13 +60,15 @@ public class App {
            }
         }
 
-        System.out.println("-----------------------------");
-        System.out.println("Binary Tree");
+        // System.out.println("-----------------------------");
+        // System.out.println("Binary Tree");
 
-        root.transformToBinary(root);
+        // root.transformToBinary(root);
 
-        BTreePrinter.printNode(root);
-        root.findElement(root, 1);
+        // BTreePrinter.printNode(root);
+        // root.findElement(root, 1);
+       System.out.println(root.findLeafLeft(root));
+       System.out.println(root.findLeafRight(root));
         scan.close();
         
     }

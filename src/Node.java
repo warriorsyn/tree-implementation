@@ -158,29 +158,25 @@ public class Node<T> {
      * @param node
      * @return
      */
-    public ArrayList<Node<T>> findLeaf(Node<T> node) {
-
+    public Node<T> findLeafLeft(Node<T> node) {
         if (node == null) {
             return  null;
-        } else if (node.getLeft() != null && node.getRight() != null && node.getCenter() != null){
-            if (node.left != null) {
-                LeafList.add(node.left);
-            }
-
-            if (node.right != null) {
-                LeafList.add(node.right);
-            }
-
-            if (node.center != null) {
-                LeafList.add(node.center);
-            }
-            
-
-            return LeafList;
+        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
+            LeafList.add(node);
+            return node;
         }else{
-            return findLeaf(node);
+            return findLeafLeft(node.left);
         }
-
+    }
+    public Node<T> findLeafRight(Node<T> node){
+        if (node == null) {
+            return  null;
+        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
+            LeafList.add(node);
+            return node;
+        }else{
+            return findLeafRight(node.right);
+        }
     }
 
     public Node<T> isRoot(Node<T> root){
@@ -192,8 +188,8 @@ public class Node<T> {
 
     }
 
-    /*
-     * public int quantLeaf(Node<T> node) {
+    
+    public int quantLeaf(Node<T> node) {
 
         if (node == null) {
             return  0;
@@ -204,7 +200,7 @@ public class Node<T> {
         }
 
     }
-     */
+     
 
      public int findDepth (Node<T> node, Node<T> parent){
 
@@ -274,6 +270,8 @@ public class Node<T> {
 
         return null;
     }
+
+
 
     @Override
     public String toString() {
