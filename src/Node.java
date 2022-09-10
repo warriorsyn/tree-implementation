@@ -47,16 +47,11 @@ public class Node<T> {
         this.right = right;
     }
 
-
+    /**
+     * @return parent of a node
+     */
     public Node<T> getParent() {
         return parent;
-    }
-
-    /**
-     * @param parent the parent to set
-     */
-    public void setParent(Node<T> parent) {
-        this.parent = parent;
     }
 
     /**
@@ -149,7 +144,6 @@ public class Node<T> {
         thread2.start();
     }
 
-    ArrayList<Node<T>> LeafList = new ArrayList<Node<T>>();
     /**
      * @return boolean
      */
@@ -162,6 +156,9 @@ public class Node<T> {
         return false;
     }
 
+    /**
+     * @return node degree
+     */
     public int getNodeDegree() {
         int degree = 0;
         if (this.getLeft() != null) {
@@ -179,6 +176,10 @@ public class Node<T> {
         return degree;
     }
 
+    /**
+     * @param node
+     * @return tree degree
+     */
     public int getTreeDegree(Node<T> node) {
         int treeDegree = 0;
 
@@ -212,46 +213,18 @@ public class Node<T> {
         return treeDegree;
     }
 
-    public Node<T> findLeafLeft(Node<T> node) {
-        if (node == null) {
-            return  null;
-        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
-            LeafList.add(node);
-            return node;
-        }else{
-            return findLeafLeft(node.left);
-        }
-    }
-    public Node<T> findLeafRight(Node<T> node){
-        if (node == null) {
-            return  null;
-        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
-            LeafList.add(node);
-            return node;
-        }else{
-            return findLeafRight(node.right);
-        }
-    }
-
+    /**
+     * @return of node is root
+     */
     public boolean isRoot(){
-      if (this.getParent() == null) {
-          return true;
-      }
-
-      return false;
+        return this.getParent() == null;
     }
 
-    public int quantLeaf(Node<T> node) {
-
-        if (node == null) {
-            return  0;
-        } else if (node.getLeft() == null && node.getRight() == null && node.getCenter() == null){
-            return 1;
-        }else{
-            return quantLeaf(node.left) + quantLeaf(node.right) + quantLeaf(node.center);
-        }
-    }
-
+    /**
+     * @param root root node
+     * @param x value of a node
+     * @return depth number
+     */
     public int findDepth(Node<T> root, T x) {
         if (root == null) {
             return -1;
@@ -268,7 +241,7 @@ public class Node<T> {
         return dist;
     }
 
-    public int findHeightUtil(Node root, T x)
+    private int findHeightUtil(Node root, T x)
     {
         // Base Case
         if (root == null)
@@ -276,22 +249,21 @@ public class Node<T> {
             return -1;
         }
 
-        // Store the maximum height of
-        // the left and right subtree
         int leftHeight = findHeightUtil(root.left, x);
 
         int rightHeight = findHeightUtil(root.right, x);
 
-        // Update height of the current node
         int ans = Math.max(leftHeight, rightHeight) + 1;
 
-        // If current node is the required node
         if (root.value == x)
             height = ans;
 
         return ans;
     }
 
+    /**
+     * @return number of the height node
+     */
     public int findHeight(Node root, T x)
     {
         findHeightUtil(root, x);
@@ -299,7 +271,9 @@ public class Node<T> {
         return height;
     }
 
-
+    /**
+     * @return search element
+     */
     public Node<T> findElement(Node<T> node, T element) {
         if (node != null) {
             if (element.equals(node.getValue())){
@@ -328,6 +302,9 @@ public class Node<T> {
         return null;
     }
 
+    /**
+     * @return report of nodes
+     */
     public void extractData(Node<T> node) {
         if (node != null) {
             if (node.isRoot()) {
