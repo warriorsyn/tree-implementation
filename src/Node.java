@@ -1,3 +1,5 @@
+import com.sun.jdi.request.DuplicateRequestException;
+
 public class Node<T> {
     private T value;
     private Node<T> right;
@@ -96,7 +98,7 @@ public class Node<T> {
     /**
      * @param node<T> the node to be set into a branch
      */
-    public void insertNodeToBranch(Node<T> node) throws Exception {
+    public void insertNodeToBranch(Node<T> node) throws DuplicateRequestException {
         verifyDuplicatedValues(node.getValue());
         if (this.left == null) {
             this.setLeft(node);
@@ -354,9 +356,9 @@ public class Node<T> {
         }
     }
 
-    private void verifyDuplicatedValues(T element) throws Exception {
+    private void verifyDuplicatedValues(T element) throws DuplicateRequestException {
         if (findElement(this.rootNode, element) != null) {
-          throw new Exception("The value of the node you trying to create already exists!");
+          throw new DuplicateRequestException("The value of the node you trying to create already exists!");
         }
     }
     @Override

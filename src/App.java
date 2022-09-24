@@ -1,4 +1,6 @@
-import java.util.Scanner; 
+import com.sun.jdi.request.DuplicateRequestException;
+
+import java.util.Scanner;
 
 public class App {
     private static void handleAddNodesToRoot(int value, Node root, Scanner scan) {
@@ -16,7 +18,7 @@ public class App {
             try {
                 root.insertNodeToBranch(node);
                 hasDuplicityError = false;
-            } catch(Exception e) {
+            } catch(DuplicateRequestException e) {
                 System.out.println(e.getMessage());
                 hasDuplicityError = true;
             }
@@ -25,7 +27,7 @@ public class App {
         BTreePrinter.printNode(root);
     }
 
-    private static void handleAddNodesToBranches(int value, Node root, Scanner scan, int j, int i) throws Exception {
+    private static void handleAddNodesToBranches(int value, Node root, Scanner scan, int j, int i) throws DuplicateRequestException {
         boolean firstExec = true;
         int branchNode = 0;
 
@@ -60,7 +62,7 @@ public class App {
                 try {
                     foundNode.insertNodeToBranch(newNode);
                     hasDuplicityError = false;
-                } catch(Exception e) {
+                } catch(DuplicateRequestException e) {
                     System.out.println(e.getMessage());
                     hasDuplicityError = true;
                 }
@@ -68,7 +70,7 @@ public class App {
             BTreePrinter.printNode(root);
         }
     }
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws DuplicateRequestException {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("enter the numbers of nodes: ");
@@ -106,7 +108,5 @@ public class App {
         System.out.println("The height of the tree is: " + root.findHeight(root, root.getValue()));
         System.out.println("The depth of the tree is: " + root.findDepth(root, root.getValue()));
         scan.close();
-        
     }
-         
 }
