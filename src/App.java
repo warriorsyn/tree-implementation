@@ -1,6 +1,73 @@
 import java.util.Scanner; 
 
 public class App {
+    private static void handleAddNodesToRoot(int value, Node root, Scanner scan) {
+        boolean hasDuplicityError = false;
+
+        do {
+            if (hasDuplicityError) {
+                System.out.print("enter value of the node: ");
+                value = scan.nextInt();
+            }
+
+            Node<Integer> node = new Node<>(value, root);
+            node.setRootNode(root);
+
+            try {
+                root.insertNodeToBranch(node);
+                hasDuplicityError = false;
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+                hasDuplicityError = true;
+            }
+        } while (hasDuplicityError);
+
+        BTreePrinter.printNode(root);
+    }
+
+    private static void handleAddNodesToBranches(int value, Node root, Scanner scan, int j, int i) throws Exception {
+        boolean firstExec = true;
+        int branchNode = 0;
+
+        if (j != i) {
+            firstExec = false;
+        }
+
+        if (firstExec) {
+            System.out.print("In which node do you want to insert this value to branch? : ");
+            branchNode = scan.nextInt();
+        }
+
+        if (!firstExec) {
+            System.out.print("enter value of the node: ");
+            value = scan.nextInt();
+            System.out.print("In which node do you want to insert this value to branch? : ");
+            branchNode = scan.nextInt();
+        }
+
+        var foundNode = root.findElement(root, branchNode);
+
+        if (foundNode != null) {
+            boolean hasDuplicityError = false;
+            do {
+                if (hasDuplicityError) {
+                    System.out.print("enter value of the node: ");
+                    value = scan.nextInt();
+                }
+
+                var newNode = new Node<>(value, foundNode, root);
+
+                try {
+                    foundNode.insertNodeToBranch(newNode);
+                    hasDuplicityError = false;
+                } catch(Exception e) {
+                    System.out.println(e.getMessage());
+                    hasDuplicityError = true;
+                }
+            } while (hasDuplicityError);
+            BTreePrinter.printNode(root);
+        }
+    }
     public static void main(String[] args) throws Exception {
         Scanner scan = new Scanner(System.in);
 
@@ -15,44 +82,15 @@ public class App {
 
             if (i == 0) {
                 root.setValue(value);
+                root.setRootNode(root);
             } else {
                 if (root.getLeft() != null && root.getCenter() != null && root.getRight() != null) {
                        for (int j = i; j < NumberNodes; j++){
-                               boolean firstExec = true;
-                               int branchNode = 0;
-
-                               if (j != i) {
-                                   firstExec = false;
-                               }
-
-                               if (firstExec) {
-                                       System.out.print("In which node do you want to insert this value to branch? : ");
-                                       branchNode = scan.nextInt();
-                               }
-
-                               if (!firstExec) {
-                                       System.out.print("enter value of the node: ");
-                                       value = scan.nextInt();
-                                       System.out.print("In which node do you want to insert this value to branch? : ");
-                                       branchNode = scan.nextInt();
-                               }
-
-                               var foundNode = root.findElement(root, branchNode);
-
-                               if (foundNode != null) {
-                                       var newNode = new Node<>(value, foundNode);
-                                       foundNode.insertNodeToBranch(newNode);
-
-                                       BTreePrinter.printNode(root);
-                               }
+                           handleAddNodesToBranches(value, root, scan, j, i);
                        }
                 } else {
-
-                    Node<Integer> node = new Node<Integer>(value, root);
-                    root.insertNodeToBranch(node);
-                    BTreePrinter.printNode(root);
+                    handleAddNodesToRoot(value, root, scan);
                 }
-
            }
         }
 

@@ -16,6 +16,13 @@ public class Node<T> {
         this.right = this.center = this.left = null;
     }
 
+    public Node(T value, Node<T> parent, Node<T> rootNode) {
+        this.value = value;
+        this.parent = parent;
+        this.rootNode = rootNode;
+        this.right = this.center = this.left = null;
+    }
+
     public Node() {
     }
 
@@ -82,10 +89,14 @@ public class Node<T> {
         this.left = left;
     }
 
+    public void setRootNode(Node<T> root) {
+        this.rootNode = root;
+    }
     /**
      * @param node<T> the node to be set into a branch
      */
-    public void insertNodeToBranch(Node<T> node) {
+    public void insertNodeToBranch(Node<T> node) throws Exception {
+        verifyDuplicatedValues(node.getValue());
         if (this.left == null) {
             this.setLeft(node);
             return;
@@ -343,6 +354,11 @@ public class Node<T> {
         }
     }
 
+    private void verifyDuplicatedValues(T element) throws Exception {
+        if (findElement(this.rootNode, element) != null) {
+          throw new Exception("The value of the node you trying to create already exists!");
+        }
+    }
     @Override
     public String toString() {
         return value.toString();
