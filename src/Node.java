@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Node<T> {
     private T value;
     private Node<T> right;
@@ -89,6 +87,9 @@ public class Node<T> {
         this.left = left;
     }
 
+    /**
+     * @param root the root to set
+     */
     public void setRootNode(Node<T> root) {
         this.rootNode = root;
     }
@@ -156,9 +157,8 @@ public class Node<T> {
     }
 
     /**
-     * @return boolean
+     * @return boolean with the information if node is a leaf
      */
-
     public boolean isLeaf() {
         if (this.right == null && this.center == null && this.left == null) {
             return true;
