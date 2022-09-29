@@ -7,6 +7,10 @@ public class Node<T> {
     private Node<T> left;
     private Node<T> parent;
     private Node<T> rootNode;
+
+    public Node<T> getRootNode() {
+        return rootNode;
+    }
     private int height;
 
     public Node(T value, Node<T> parent) {
@@ -156,6 +160,27 @@ public class Node<T> {
 
         thread1.start();
         thread2.start();
+    }
+
+    public void TreeSearchBinary(Node<Integer> novo, Node<Integer> root ) {
+        if (root == null) {
+            root = novo;
+        }else{
+            if (novo.value < root.value) {
+                if (root.left == null) {
+                    root.left = novo;
+                } else {
+                    TreeSearchBinary(novo, root.right);
+                }
+                
+            } else {
+                if (root.right == null) {
+                    root.right = novo;
+                } else {
+                    TreeSearchBinary(novo, root.left);
+                }
+            }
+        }
     }
 
     /**

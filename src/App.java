@@ -103,6 +103,12 @@ public class App {
         BTreePrinter.printNode(root);
 
         System.out.println("-----------------------------");
+        System.out.println("Search Binary Tree");
+
+        root.TreeSearchBinary(root, null);
+        BTreePrinter.printNode(root);
+        
+        System.out.println("-----------------------------");
         root.extractData(root);
         System.out.println("The tree degree is: " + root.getTreeDegree(root));
         System.out.println("The height of the tree is: " + root.findHeight(root, root.getValue()));
