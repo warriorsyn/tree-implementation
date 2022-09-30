@@ -70,13 +70,29 @@ public class App {
             BTreePrinter.printNode(root);
         }
     }
+
+    private static void handleDeleteNodes(Node root, Scanner scan) {
+        boolean stopDelete = false;
+        while(!stopDelete) {
+            System.out.println("Enter the node you want to delete (type -1 to stop): ");
+            int value = scan.nextInt();
+
+            if (value == -1) {
+                stopDelete = true;
+            }
+
+            root.deleteKey(value);
+            System.out.println("-----------------------------------------------");
+            BTreePrinter.printNode(root);
+        }
+    }
     public static void main(String[] args) throws DuplicateRequestException {
         Scanner scan = new Scanner(System.in);
 
         System.out.print("enter the numbers of nodes: ");
         Integer NumberNodes = scan.nextInt();
 
-        Node<Integer> root = new Node<Integer>();
+        Node<Integer> root = new Node<>();
 
         for (int i = 0; i < NumberNodes; i++) {
             System.out.print("enter value of the node: ");
@@ -111,22 +127,7 @@ public class App {
 
         System.out.println("-----------------------------");
 
-        boolean stopDelete = false;
-        while(!stopDelete) {
-            System.out.println("Enter the node you want to delete (type -1 to stop): ");
-            int value = scan.nextInt();
-
-            if (value == -1) {
-                stopDelete = true;
-            }
-
-            root.deleteKey(value);
-
-        }
-
-        BTreePrinter.printNode(root);
-
-
+        handleDeleteNodes(root, scan);
 
         System.out.println("-----------------------------");
         root.extractData(root);
