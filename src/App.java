@@ -105,7 +105,7 @@ public class App {
         System.out.println("-----------------------------");
         System.out.println("Search Binary Tree");
 
-        root.TreeSearchBinary(root, null);
+        Node.convertToSearchBinaryTree(root);
         BTreePrinter.printNode(root);
         
         System.out.println("-----------------------------");

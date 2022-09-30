@@ -1,5 +1,9 @@
 import com.sun.jdi.request.DuplicateRequestException;
 
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class Node<T> {
     private T value;
     private Node<T> right;
@@ -162,7 +166,7 @@ public class Node<T> {
         thread2.start();
     }
 
-    public void TreeSearchBinary(Node<Integer> novo, Node<Integer> root ) {
+    public void TreeSearchBinary(Node<Integer> novo, Node<Integer> root) {
         if (root == null) {
             root = novo;
         }else{
@@ -386,6 +390,51 @@ public class Node<T> {
           throw new DuplicateRequestException("The value of the node you trying to create already exists!");
         }
     }
+
+    public static void inorder(Node root)
+    {
+        if (root == null) {
+            return;
+        }
+
+        inorder(root.left);
+        System.out.print(root.value + " ");
+        inorder(root.right);
+    }
+
+    public static void extractKeys(Node root, Set<Integer> set)
+    {
+        // base case
+        if (root == null) {
+            return;
+        }
+
+        extractKeys(root.left, set);
+        set.add((Integer) root.value);
+        extractKeys(root.right, set);
+    }
+
+    public static void convertToBST(Node root, Iterator<Integer> it)
+    {
+        if (root == null) {
+            return;
+        }
+
+        convertToBST(root.left, it);
+        root.value = it.next();
+        convertToBST(root.right, it);
+    }
+
+    // Function to convert a binary tree to BST by maintaining its original structure
+    public static void convertToSearchBinaryTree(Node root)
+    {
+        Set<Integer> set = new TreeSet<>();
+        extractKeys(root, set);
+
+        Iterator<Integer> it = set.iterator();
+        convertToBST(root, it);
+    }
+
     @Override
     public String toString() {
         return value.toString();
