@@ -107,7 +107,27 @@ public class App {
 
         Node.convertToSearchBinaryTree(root);
         BTreePrinter.printNode(root);
-        
+
+
+        System.out.println("-----------------------------");
+
+        boolean stopDelete = false;
+        while(!stopDelete) {
+            System.out.println("Enter the node you want to delete (type -1 to stop): ");
+            int value = scan.nextInt();
+
+            if (value == -1) {
+                stopDelete = true;
+            }
+
+            root.deleteKey(value);
+
+        }
+
+        BTreePrinter.printNode(root);
+
+
+
         System.out.println("-----------------------------");
         root.extractData(root);
         System.out.println("The tree degree is: " + root.getTreeDegree(root));

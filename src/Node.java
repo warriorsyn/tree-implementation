@@ -176,7 +176,7 @@ public class Node<T> {
                 } else {
                     TreeSearchBinary(novo, root.right);
                 }
-                
+
             } else {
                 if (root.right == null) {
                     root.right = novo;
@@ -385,6 +385,34 @@ public class Node<T> {
         }
     }
 
+    public void deleteByNode(T value) {
+        var el = this.findElement(rootNode, value);
+        if (el.isLeaf()) {
+            deleteLeaf(el);
+
+            return;
+        }
+
+
+    }
+
+    private void deleteIntermediateNodes(Node<T> el) throws Exception {
+        if (el.left != null && el.right != null) {
+            throw new Exception("You can't remove this node 'cause it has both children!");
+        }
+
+
+    }
+    private void deleteLeaf(Node<T> el) {
+       if (el.parent.left != null && el.parent.left.equals(el)) {
+           el.parent.left = null;
+       }
+
+       if (el.parent.right != null && el.right.equals(el)) {
+           el.parent.right = null;
+       }
+    }
+
     private void verifyDuplicatedValues(T element) throws DuplicateRequestException {
         if (findElement(this.rootNode, element) != null) {
           throw new DuplicateRequestException("The value of the node you trying to create already exists!");
@@ -433,6 +461,68 @@ public class Node<T> {
 
         Iterator<Integer> it = set.iterator();
         convertToBST(root, it);
+    }
+
+
+    void deleteKey(int key) { rootNode = deleteRec(rootNode, key); }
+
+    /* A recursive function to
+      delete an existing key in BST
+     */
+    Node deleteRec(Node<T> root, int key)
+    {
+        /* Base Case: If the tree is empty */
+        if (root == null)
+            return root;
+
+        /* Otherwise, recur down the tree */
+        if (key < (Integer)root.value)
+            root.left = deleteRec(root.left, key);
+        else if (key >(Integer) root.value)
+            root.right = deleteRec(root.right, key);
+
+            // if key is same as root's
+            // key, then This is the
+            // node to be deleted
+        else {
+            // node with only one child or no child
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+
+            // node with two children: Get the inorder
+            // successor (smallest in the right subtree)
+            root.value = minValue(root.right);
+
+            // Delete the inorder successor
+            root.right = deleteRec(root.right, (Integer)root.value);
+        }
+
+        return root;
+    }
+
+    T minValue(Node root)
+    {
+        var minv = root.value;
+        while (root.left != null)
+        {
+            minv = root.left.value;
+            root = root.left;
+        }
+        return (T) minv;
+    }
+
+    void inorder() { inorderRec(rootNode); }
+
+    // A utility function to do inorder traversal of BST
+    void inorderRec(Node root)
+    {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.value + " ");
+            inorderRec(root.right);
+        }
     }
 
     @Override
